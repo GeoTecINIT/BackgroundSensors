@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sensor_recording_channel_description">Sensorization</string>
+    <string name="sensorization_notification_title">Sensorization</string>
+    <string name="sensorization_notification_text">Collecting data from sensors</string>
+
+</resources>
