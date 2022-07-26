@@ -36,7 +36,7 @@ public abstract class CollectorManager {
         return availableSensors;
     }
 
-    public boolean isSensorAvailable(Sensor sensor) {
+    protected boolean isSensorAvailable(Sensor sensor) {
         boolean hasFeature = context.getPackageManager().hasSystemFeature(sensor.getSystemFeature());
 
         // Heart rate appears to be not available as system feature in the emulator
@@ -47,7 +47,7 @@ public abstract class CollectorManager {
         if (sensorType == -1)
             return hasFeature;
 
-        boolean hasSensor = sensorManager.getDefaultSensor(sensor.getType()) != null;
+        boolean hasSensor = getAndroidSensor(sensor) != null;
 
         return hasFeature || hasSensor;
     }

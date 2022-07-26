@@ -60,6 +60,8 @@ public abstract class SensorRecordingService extends Service {
         sensorsBeingRecorded = new HashSet<>();
 
         collectorManager = getCollectorManager();
+
+        runInForegroundWithNotification();
     }
 
     @Override
@@ -69,8 +71,6 @@ public abstract class SensorRecordingService extends Service {
         if (!wakeLock.isHeld()) {
             wakeLock.acquire(TIMEOUT);
         }
-
-        runInForegroundWithNotification();
 
         return START_STICKY;
     }
