@@ -32,6 +32,7 @@ public class ServiceManager {
                     SensorRecordingService.SensorRecordingBinder binder =
                             (SensorRecordingService.SensorRecordingBinder) collectionService;
                     binder.startRecordingFor(configuration, recordCallback);
+                    context.unbindService(this);
                 }
 
                 @Override
@@ -55,6 +56,7 @@ public class ServiceManager {
                         SensorRecordingService.SensorRecordingBinder binder =
                                 (SensorRecordingService.SensorRecordingBinder) collectionService;
                         binder.stopRecordingFor(sensor);
+                        context.unbindService(this);
                     }
 
                     @Override
