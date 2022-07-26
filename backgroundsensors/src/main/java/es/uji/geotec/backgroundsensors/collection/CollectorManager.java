@@ -13,8 +13,7 @@ import es.uji.geotec.backgroundsensors.sensor.Sensor;
 
 public abstract class CollectorManager {
 
-    private Context context;
-
+    protected Context context;
     protected List<Sensor> sensors;
     protected HashMap<Sensor, SensorEventListener> listeners;
     protected SensorManager sensorManager;
@@ -36,7 +35,7 @@ public abstract class CollectorManager {
         return availableSensors;
     }
 
-    protected boolean isSensorAvailable(Sensor sensor) {
+    public boolean isSensorAvailable(Sensor sensor) {
         boolean hasFeature = context.getPackageManager().hasSystemFeature(sensor.getSystemFeature());
 
         // Heart rate appears to be not available as system feature in the emulator
