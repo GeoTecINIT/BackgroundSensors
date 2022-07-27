@@ -24,7 +24,7 @@ public class BaseCollectorManager extends CollectorManager {
     ) {
         Sensor sensor = collectionConfiguration.getSensor();
 
-        if (!isSensorAvailable(sensor))
+        if (!sensorManager.isSensorAvailable(sensor))
             return false;
 
         RecordAccumulator accumulator = new RecordAccumulator(
@@ -37,7 +37,7 @@ public class BaseCollectorManager extends CollectorManager {
 
 
         android.hardware.Sensor androidSensor = this.getAndroidSensor(sensor);
-        return sensorManager.registerListener(
+        return androidSensorManager.registerListener(
                 listener,
                 androidSensor,
                 collectionConfiguration.getSensorDelay()
@@ -53,7 +53,7 @@ public class BaseCollectorManager extends CollectorManager {
         listeners.remove(sensor);
 
         android.hardware.Sensor androidSensor = this.getAndroidSensor(sensor);
-        sensorManager.unregisterListener(listener, androidSensor);
+        androidSensorManager.unregisterListener(listener, androidSensor);
     }
 
     @Override
