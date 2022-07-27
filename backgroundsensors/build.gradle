@@ -27,6 +27,11 @@ android {
 
     publishing {
         singleVariant('release') {
+            withJavadocJar()
+            withSourcesJar()
+        }
+
+        singleVariant('debug') {
             withSourcesJar()
         }
     }
@@ -41,6 +46,16 @@ publishing {
 
             afterEvaluate {
                 from components.release
+            }
+        }
+
+        debug(MavenPublication) {
+            groupId = 'es.uji.geotec'
+            artifactId = 'backgroundsensors'
+            version = '1.0.0-debug'
+
+            afterEvaluate {
+                from components.debug
             }
         }
     }
