@@ -175,6 +175,6 @@ to return the collector manager created at 3. Declare the new service into the `
 
 
 ## License
-TODO
+See [LICENSE](LICENSE).
 
 
