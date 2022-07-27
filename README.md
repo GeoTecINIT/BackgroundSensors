@@ -159,7 +159,19 @@ Specific record for the samples obtained from triaxial sensors (i.e., accelerome
 > collected, you must stop the collection first and then start it again with the new configuration. 
 
 ## Extending the functionality
-TODO
+The library can be extended to support other sensors, for example, the heart rate monitor of a 
+WearOS smartwatch.
+
+To extend the functionality, the developer must follow the next steps:
+1. Create its own enum of sensors implementing the `Sensor` interface.
+2. Create its own records extending the `Record` class.
+3. Create a new collector manager extending the `CollectorManager` class.
+4. Create a new service extending the `SensorRecordingService` service, and implement the method
+to return the collector manager created at 3. Declare the new service into the `AndroidManifest.xml`.
+5. Ready to go! Just inject the class reference of the new service to the `ServiceManager`. 
+
+> **Note**: the developer is in charge of requesting the required permissions for the new sources,
+> in case they are needed.
 
 
 ## License
