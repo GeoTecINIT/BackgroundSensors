@@ -73,7 +73,7 @@ public class Demo extends Activity {
 }
 ```
 
-> **Note**: a full example can be found in [DemoActivity](./app/src/main/java/es/uji/geotec/backgroundsensorsdemo/DemoActivity.java)
+> **Note**: a full example can be found in [DemoActivity](app/src/main/java/es/uji/geotec/backgroundsensorsdemo/DemoActivity.java)
 
 As the library uses a foreground service for the data collection, a notification is shown while the service
 is working. The notification has some default texts and icons, but you can override these settings.
@@ -93,7 +93,7 @@ To change the notification's texts add these strings to your `strings.xml` with 
 To change the notification's icon add a drawable named `ic_sensor_service.xml`
 
 ## API
-### [`BaseSensor`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/BaseSensor.java)
+### [`BaseSensor`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/BaseSensor.java)
 
 | **Value**       | **Description**                      |
 |-----------------|--------------------------------------|
@@ -101,11 +101,11 @@ To change the notification's icon add a drawable named `ic_sensor_service.xml`
 | `GYROSCOPE`     | Represents the gyroscope sensor.     |
 | `MAGNETOMETER`  | Represents the magnetometer sensor.  |
 
-The `BaseSensor` enum implements the interface [`Sensor`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/Sensor.java),
+The `BaseSensor` enum implements the interface [`Sensor`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/Sensor.java),
 so some methods use `Sensor` as parameters and return types.
 
 
-### [`SensorManager`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/SensorManager.java)
+### [`SensorManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/SensorManager.java)
 
 | **Method**                           |  **Return type**  | **Description**                                                      |
 |--------------------------------------|-------------------|----------------------------------------------------------------------|
@@ -113,7 +113,7 @@ so some methods use `Sensor` as parameters and return types.
 | `isSensorAvailable(Sensor sensor)`   | `boolean`         | Returns `true` if the specified sensor is available in the device .  |
 
 
-### [`CollectionConfiguration`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/collection/CollectionConfiguration.java)
+### [`CollectionConfiguration`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/collection/CollectionConfiguration.java)
 
 | **Field**     |  **Type** | **Description**                                                                                                                           |
 |---------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
@@ -121,7 +121,7 @@ so some methods use `Sensor` as parameters and return types.
 | `sensorDelay` | `int`     | Sampling rate (i.e., time between samples). Use constants defined in the native android.hardware.SensorManager or a value in nanoseconds. |
 | `batchSize`   | `int`     | Quantity of sensor samples to be reported each time.                                                                                      |
 
-### [`Record`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/Record.java)
+### [`Record`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/Record.java)
 Base record of the library. Its purpose is to be extended by other classes to create specific type of records.
 
 | **Field**     |  **Type** | **Description**                              |
@@ -129,7 +129,7 @@ Base record of the library. Its purpose is to be extended by other classes to cr
 | `sensor`      | `Sensor`  | Sensor of the collection configuration.      |
 | `timestamp`   | `long`    | Timestamp at which the record was collected. |
 
-#### [`TriAxialRecord`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/TriAxialRecord.java)
+#### [`TriAxialRecord`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/TriAxialRecord.java)
 Specific record for the samples obtained from triaxial sensors (i.e., accelerometer, gyroscope and magnetometer).
 
 | **Field** | **Type** | **Description**                           |
@@ -138,7 +138,7 @@ Specific record for the samples obtained from triaxial sensors (i.e., accelerome
 | `y`       | `float`  | Value of the component _y_ of the sensor. |
 | `z`       | `float`  | Value of the component _z_ of the sensor. |
 
-### [`RecordCallback`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/callback/RecordCallback.java)
+### [`RecordCallback`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/callback/RecordCallback.java)
 
 | **Method**                            | **Return type** | **Description**                                               |
 |---------------------------------------|-----------------|---------------------------------------------------------------|
@@ -147,7 +147,7 @@ Specific record for the samples obtained from triaxial sensors (i.e., accelerome
 `T` is a generic type, in this case, any type extending the class [`Record`](#record).
 
 
-### [`ServiceManager`](./backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/service/manager/ServiceManager.java)
+### [`ServiceManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/service/manager/ServiceManager.java)
 
 | **Method**                                                                 | **Return type** | **Description**                                                       |
 |----------------------------------------------------------------------------|-----------------|-----------------------------------------------------------------------|
