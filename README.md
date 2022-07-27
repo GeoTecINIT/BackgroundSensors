@@ -1,4 +1,5 @@
 # BackgroundSensors
+[![](https://jitpack.io/v/GeotecINIT/BackgroundSensors.svg)](https://jitpack.io/#GeotecINIT/BackgroundSensors)
 
 The _backgroundsensors_ library is an Android library that allows to collect data from the IMU
 sensors (i.e., accelerometer and gyroscope) and the magnetometer (if they are present in the device).
@@ -11,7 +12,46 @@ as proposed by [González-Pérez et al.](https://doi.org/10.1016/j.pmcj.2022.101
 
 
 ## Installation
-TODO
+To install the library you have to add the [Jitpack](https://jitpack.io) repository to file where your project
+describes the repositories:
+
+<details>
+  <summary>build.gradle (project)</summary>
+
+```groovy
+allprojects {
+    repositories {
+        // ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+</details>
+
+<details>
+  <summary>settings.gradle</summary>
+
+```groovy
+dependencyResolutionManagement {
+    repositories {
+        // ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+</details>
+
+Then, just add the dependency:
+
+```groovy
+dependencies {
+    implementation 'com.github.GeotecINIT:BackgroundSensors:1.0.0-alpha'
+}
+```
+
+> **Note**: if you are considering to create a new library extending the features of 
+> BackgroundSensors, use `api` instead of `implementation`. If you are extending the library
+> directly in an application, `implementation` should work.
 
 ## Requirements
 The library has the following requirements:
