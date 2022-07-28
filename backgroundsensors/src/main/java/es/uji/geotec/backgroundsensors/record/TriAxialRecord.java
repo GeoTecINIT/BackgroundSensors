@@ -29,8 +29,8 @@ public class TriAxialRecord extends Record {
     public String toString() {
         return "TriAxialRecord{" +
                 "sensor=" + getSensor() +
-                "timestamp=" + getTimestamp() +
-                "x=" + x +
+                ", timestamp=" + getTimestamp() +
+                ", x=" + x +
                 ", y=" + y +
                 ", z=" + z +
                 '}';

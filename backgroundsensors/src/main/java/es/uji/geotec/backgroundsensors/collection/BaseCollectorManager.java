@@ -10,11 +10,21 @@ import es.uji.geotec.backgroundsensors.record.accumulator.RecordAccumulator;
 import es.uji.geotec.backgroundsensors.record.callback.RecordCallback;
 import es.uji.geotec.backgroundsensors.sensor.BaseSensor;
 import es.uji.geotec.backgroundsensors.sensor.Sensor;
+import es.uji.geotec.backgroundsensors.time.DefaultTimeProvider;
+import es.uji.geotec.backgroundsensors.time.TimeProvider;
 
 public class BaseCollectorManager extends CollectorManager {
 
     public BaseCollectorManager(Context context) {
-        super(context, Arrays.asList(BaseSensor.values()));
+        this(context, BaseSensor.values(), new DefaultTimeProvider());
+    }
+
+    public BaseCollectorManager(Context context, TimeProvider timeProvider) {
+        this(context, BaseSensor.values(), timeProvider);
+    }
+
+    public BaseCollectorManager(Context context, Sensor[] sensors, TimeProvider timeProvider) {
+        super(context, Arrays.asList(sensors), timeProvider);
     }
 
     @Override
@@ -32,7 +42,7 @@ public class BaseCollectorManager extends CollectorManager {
                 collectionConfiguration.getBatchSize()
         );
 
-        TriAxialSensorListener listener = new TriAxialSensorListener(sensor, accumulator);
+        TriAxialSensorListener listener = new TriAxialSensorListener(sensor, accumulator, timeProvider);
         listeners.put(sensor, listener);
 
 
