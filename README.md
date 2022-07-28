@@ -56,7 +56,7 @@ dependencies {
 ## Requirements
 The library has the following requirements:
 
-- A device running Android 7.0 (API level 24) or superior.
+- A device running Android 7.0 (API level 24) or higher.
 - _(Optional)_ For apps targeting an API level 31 or higher and willing to collect data from the sensors
 at a sampling rate higher than 200Hz, the following permission must be added:
   
@@ -67,7 +67,7 @@ at a sampling rate higher than 200Hz, the following permission must be added:
 ## Usage
 
 The usage of the library is pretty straightforward. The sensors are defined in the enum [`BaseSensor`](#basesensor), and
-the [`SensorManager`](#sensormanager) can be used to know which one of them are available in the device. 
+the [`SensorManager`](#sensormanager) can be used to know which ones of them are available in the device. 
 
 To manage the data collection, an instance of the [`ServiceManager`](#servicemanager) must be created injecting 
 the `BaseSensorRecordingService` (i.e., the service for collecting data from the `BaseSensor`). Then, 
@@ -215,6 +215,9 @@ to return the collector manager created at 3. Declare the new service into the `
 
 
 ## License
+
+Apache License 2.0
+
 See [LICENSE](LICENSE).
 
 
