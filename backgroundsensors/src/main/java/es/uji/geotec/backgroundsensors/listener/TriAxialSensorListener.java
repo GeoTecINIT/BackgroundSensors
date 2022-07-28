@@ -6,15 +6,18 @@ import android.hardware.SensorEventListener;
 import es.uji.geotec.backgroundsensors.record.TriAxialRecord;
 import es.uji.geotec.backgroundsensors.record.accumulator.RecordAccumulator;
 import es.uji.geotec.backgroundsensors.sensor.Sensor;
+import es.uji.geotec.backgroundsensors.time.TimeProvider;
 
 public class TriAxialSensorListener implements SensorEventListener {
 
     private Sensor sensor;
     private RecordAccumulator accumulator;
+    private TimeProvider timeProvider;
 
-    public TriAxialSensorListener(Sensor sensor, RecordAccumulator recordAccumulator) {
+    public TriAxialSensorListener(Sensor sensor, RecordAccumulator recordAccumulator, TimeProvider timeProvider) {
         this.sensor = sensor;
         this.accumulator = recordAccumulator;
+        this.timeProvider = timeProvider;
     }
 
     @Override
@@ -26,7 +29,14 @@ public class TriAxialSensorListener implements SensorEventListener {
         float yValue = event.values[1];
         float zValue = event.values[2];
 
-        TriAxialRecord record = new TriAxialRecord(sensor, System.currentTimeMillis(), xValue, yValue, zValue);
+        TriAxialRecord record = new TriAxialRecord(
+                sensor,
+                timeProvider.getTimestampFromElapsedNanos(event.timestamp),
+                xValue,
+                yValue,
+                zValue
+        );
+
         accumulator.accumulateRecord(record);
     }
 

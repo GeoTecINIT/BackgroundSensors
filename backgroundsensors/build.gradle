@@ -42,10 +42,38 @@ publishing {
         release(MavenPublication) {
             groupId = 'es.uji.geotec'
             artifactId = 'backgroundsensors'
-            version = '1.0.0'
+            version = '1.0.0-alpha'
 
             afterEvaluate {
                 from components.release
+            }
+
+            pom {
+                name = 'BackgroundSensors'
+                description = 'The backgroundsensors library is an Android library that allows to ' +
+                        'collect data from the IMU sensors (i.e., accelerometer and gyroscope) and' +
+                        ' the magnetometer (if they are present in the device). It aims to ensure' +
+                        ' the data collection while the app is in background by using foregrund' +
+                        ' services and wake locks.'
+                url = 'https://github.com/GeoTecINIT/BackgroundSensors'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://github.com/GeoTecINIT/BackgroundSensors/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'matey'
+                        name = 'Miguel Matey Sanz'
+                        email = 'matey@uji.es'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/GeoTecINIT/BackgroundSensors.git'
+                    developerConnection = 'scm:git:ssh://github.com/GeoTecINIT/BackgroundSensors.git'
+                    url = 'https://github.com/GeoTecINIT/BackgroundSensors'
+                }
             }
         }
 
