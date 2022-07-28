@@ -8,5 +8,5 @@ public abstract class TimeProvider {
         return getTimestamp() + (elapsedNanos - SystemClock.elapsedRealtimeNanos()) / 1000000L;
     }
 
-    abstract long getTimestamp();
+    public abstract long getTimestamp();
 }
