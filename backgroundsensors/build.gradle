@@ -7,7 +7,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        minSdk 24
+        minSdk 17
         targetSdk 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -40,9 +40,9 @@ android {
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = 'es.uji.geotec'
-            artifactId = 'backgroundsensors'
-            version = '1.0.0-alpha'
+            groupId = 'com.github.GeotecINIT'
+            artifactId = 'BackgroundSensors'
+            version = '1.0.0'
 
             afterEvaluate {
                 from components.release
@@ -78,8 +78,8 @@ publishing {
         }
 
         debug(MavenPublication) {
-            groupId = 'es.uji.geotec'
-            artifactId = 'backgroundsensors'
+            groupId = 'com.github.GeotecINIT'
+            artifactId = 'BackgroundSensors'
             version = '1.0.0-debug'
 
             afterEvaluate {
