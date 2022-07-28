@@ -3,12 +3,10 @@ package es.uji.geotec.backgroundsensors.collection;
 import android.content.Context;
 import android.hardware.SensorEventListener;
 
-import java.util.Arrays;
 
 import es.uji.geotec.backgroundsensors.listener.TriAxialSensorListener;
 import es.uji.geotec.backgroundsensors.record.accumulator.RecordAccumulator;
 import es.uji.geotec.backgroundsensors.record.callback.RecordCallback;
-import es.uji.geotec.backgroundsensors.sensor.BaseSensor;
 import es.uji.geotec.backgroundsensors.sensor.Sensor;
 import es.uji.geotec.backgroundsensors.time.DefaultTimeProvider;
 import es.uji.geotec.backgroundsensors.time.TimeProvider;
@@ -16,15 +14,11 @@ import es.uji.geotec.backgroundsensors.time.TimeProvider;
 public class BaseCollectorManager extends CollectorManager {
 
     public BaseCollectorManager(Context context) {
-        this(context, BaseSensor.values(), new DefaultTimeProvider());
+        this(context, new DefaultTimeProvider());
     }
 
     public BaseCollectorManager(Context context, TimeProvider timeProvider) {
-        this(context, BaseSensor.values(), timeProvider);
-    }
-
-    public BaseCollectorManager(Context context, Sensor[] sensors, TimeProvider timeProvider) {
-        super(context, Arrays.asList(sensors), timeProvider);
+        super(context, timeProvider);
     }
 
     @Override
