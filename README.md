@@ -56,7 +56,7 @@ dependencies {
 ## Requirements
 The library has the following requirements:
 
-- A device running Android 4.2 (API level 17) or higher.
+- A device running Android 5.0 (API level 21) or higher.
 - _(Optional)_ For apps targeting an API level 31 or higher and willing to collect data from the sensors
 at a sampling rate higher than 200Hz, the following permission must be added:
   
