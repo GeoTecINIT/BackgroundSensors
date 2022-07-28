@@ -203,12 +203,35 @@ The library can be extended to support other sensors, for example, the heart rat
 WearOS smartwatch.
 
 To extend the functionality, the developer must follow the next steps:
-1. Create its own enum of sensors implementing the `Sensor` interface.
-2. Create its own records extending the `Record` class.
-3. Create a new collector manager extending the `CollectorManager` class.
-4. Create a new service extending the `SensorRecordingService` service, and implement the method
+1. Create its own enum of sensors implementing the [`Sensor`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/sensor/Sensor.java) interface.
+2. Create its own records extending the [`Record`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/record/Record.java) class.
+3. Create a new collector manager extending the [`CollectorManager`](#collectormanager) class,
+   implementing the methods for start and stop the collection.
+4. Create a new service extending the [`SensorRecordingService`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/service/SensorRecordingService.java) service, and implement the method
 to return the collector manager created at 3. Declare the new service into the `AndroidManifest.xml`.
-5. Ready to go! Just inject the class reference of the new service to the `ServiceManager`. 
+5. Ready to go! Just inject the class reference of the new service to the [`ServiceManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/service/manager/ServiceManager.java). 
+
+### CollectorManager
+The [`CollectorManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/collection/CollectorManager.java) is an 
+abstract class the new collectors should extend to obtain data from new sensors.
+
+The [`CollectorManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/collection/CollectorManager.java)
+constructor requires a `Context` and a [`TimeProvider`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/time/TimeProvider.java). 
+The aim of the [`TimeProvider`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/time/TimeProvider.java)
+is to be used to set the timestamp of the collected records. A [`DefaultTimeProvider`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/time/DefaultTimeProvider.java) implementation is
+provided in the library, which provides the timestamp taking into account the internal clock of the phone.
+However, the developer might be interested to take into account other time, such as the time of a NTP server.
+In that case, he/she can create its own `TimeProvider`.
+
+
+| **Methods**                                                                    | **Description**                                                     |
+|--------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `startCollectingFrom(CollectionConfiguration config, RecordCallback callback)` | Starts the collection with the specified configuration.             |
+| `stopCollectingFrom(Sensor sensor)`                                            | Stops the collection of the specified sensor.                       |
+| `ensureStopCollecting()`                                                       | Stops the collection for all sensors that could be being collected. |
+
+For an example implementation you can refer to [`BaseCollectorManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/collection/BaseCollectorManager.java).
+
 
 > **Note**: the developer is in charge of requesting the required permissions for the new sources,
 > in case they are needed.
