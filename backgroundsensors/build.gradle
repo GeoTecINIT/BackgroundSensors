@@ -43,7 +43,7 @@ publishing {
         release(MavenPublication) {
             groupId = 'io.github.geotecinit'
             artifactId = 'background-sensors'
-            version = '1.0.0'
+            version = '1.0.1'
 
             afterEvaluate {
                 from components.release
@@ -81,7 +81,7 @@ publishing {
         debug(MavenPublication) {
             groupId = 'io.github.geotecinit'
             artifactId = 'background-sensors'
-            version = '1.0.0-debug'
+            version = '1.0.1-debug'
 
             afterEvaluate {
                 from components.debug
@@ -96,6 +96,21 @@ publishing {
             credentials {
                 username = ossrhUsername
                 password = ossrhPassword
+            }
+            mavenContent {
+                releasesOnly()
+            }
+        }
+
+        maven {
+            name = 'snapshots'
+            url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+            mavenContent {
+                snapshotsOnly()
             }
         }
     }
