@@ -1,7 +1,7 @@
 # BackgroundSensors
-[![](https://jitpack.io/v/GeotecINIT/BackgroundSensors.svg)](https://jitpack.io/#GeotecINIT/BackgroundSensors)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.geotecinit/background-sensors/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.geotecinit/background-sensors)
 
-The _backgroundsensors_ library is an Android library that allows to collect data from the IMU
+The _background-sensors_ library is an Android library that allows to collect data from the IMU
 sensors (i.e., accelerometer and gyroscope) and the magnetometer (if they are present in the device).
 
 The aim of this library is to ensure the data collection from the requested sensors even when the
@@ -12,45 +12,16 @@ as proposed by [González-Pérez et al.](https://doi.org/10.1016/j.pmcj.2022.101
 
 
 ## Installation
-To install the library you have to add the [Jitpack](https://jitpack.io) repository to file where your project
-describes the repositories:
-
-<details>
-  <summary>build.gradle (project)</summary>
-
-```groovy
-allprojects {
-    repositories {
-        // ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-</details>
-
-<details>
-  <summary>settings.gradle</summary>
-
-```groovy
-dependencyResolutionManagement {
-    repositories {
-        // ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-```
-</details>
-
-Then, just add the dependency:
+To install the library you have to add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'com.github.GeotecINIT:BackgroundSensors:1.0.1'
+    implementation 'io.github.geotecinit:background-sensors:1.0.0'
 }
 ```
 
 > **Note**: if you are considering to create a new library extending the features of 
-> BackgroundSensors, use `api` instead of `implementation`. If you are extending the library
+> background-sensors, use `api` instead of `implementation`. If you are extending the library
 > directly in an application, `implementation` should work.
 
 ## Requirements
