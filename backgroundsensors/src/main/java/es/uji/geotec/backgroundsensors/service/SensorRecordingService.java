@@ -81,6 +81,14 @@ public abstract class SensorRecordingService extends Service {
         super.onDestroy();
     }
 
+    protected void gracefullyStop() {
+        stopForeground(true);
+        if (wakeLock.isHeld()) {
+            wakeLock.release();
+        }
+        stopSelf();
+    }
+
     private void runInForegroundWithNotification() {
         NotificationProvider notificationProvider = new NotificationProvider(this);
 
@@ -118,14 +126,6 @@ public abstract class SensorRecordingService extends Service {
             Log.d(TAG, "no more sensors being recorded");
             gracefullyStop();
         }
-    }
-
-    private void gracefullyStop() {
-        stopForeground(true);
-        if (wakeLock.isHeld()) {
-            wakeLock.release();
-        }
-        stopSelf();
     }
 
     public abstract CollectorManager getCollectorManager();
