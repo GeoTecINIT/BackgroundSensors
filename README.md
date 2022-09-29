@@ -41,8 +41,9 @@ The usage of the library is pretty straightforward. The sensors are defined in t
 the [`SensorManager`](#sensormanager) can be used to know which ones of them are available in the device. 
 
 To manage the data collection, an instance of the [`ServiceManager`](#servicemanager) must be created injecting 
-the `BaseSensorRecordingService` (i.e., the service for collecting data from the `BaseSensor`). Then, 
-the instance can be used to start and stop the data collection.
+a `SensorRecordingService`. We offer two implementations of this service: the `BaseSensorRecordingService` and
+the `NTPSyncedSensorRecordingService` (syncs the system clock with an NTP server to label the collected samples with the most accurate timestamp). Then, 
+the `ServiceManager` instance can be used to start and stop the data collection.
 
 To start the data collection, a [`CollectionConfiguration`](#collectionconfiguration) must be provided, indicating the type of sensor
 to collect data from, the sensor delay (i.e., time between samples) and the batch size 
@@ -61,6 +62,8 @@ public class Demo extends Activity {
         
         sensorManager = new SensorManager(context);
         serviceManager = new ServiceManager(this, BaseSensorRecordingService.class);
+        // or...
+        serviceManager = new ServiceManager(this, NTPSyncedSensorRecordingService.class);
         
         // ...
     }
