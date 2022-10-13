@@ -38,15 +38,17 @@ android {
     }
 }
 
+version = '1.2.0-SNAPSHOT'
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
 publishing {
     publications {
-        release(MavenPublication) {
+        mavenAndroid(MavenPublication) {
             groupId = 'io.github.geotecinit'
             artifactId = 'background-sensors'
-            version = '1.2.0'
 
             afterEvaluate {
-                from components.release
+                from isReleaseVersion ? components.release : components.debug
             }
 
             pom {
@@ -77,47 +79,34 @@ publishing {
                 }
             }
         }
-
-        debug(MavenPublication) {
-            groupId = 'io.github.geotecinit'
-            artifactId = 'background-sensors'
-            version = '1.2.0-debug'
-
-            afterEvaluate {
-                from components.debug
-            }
-        }
     }
 
     repositories {
         maven {
-            name = 'central'
-            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
-            credentials {
-                username = ossrhUsername
-                password = ossrhPassword
-            }
-            mavenContent {
-                releasesOnly()
-            }
-        }
+            def releaseRepo = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotRepo = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
 
-        maven {
-            name = 'snapshots'
-            url = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            name = 'OSSRH'
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+
             credentials {
-                username = ossrhUsername
-                password = ossrhPassword
+                username = findProperty(ossrhUsername) ?: System.getenv("OSSRH_USERNAME")
+                password = findProperty(ossrhPassword) ?: System.getenv("OSSRH_PASSWORD")
             }
+
             mavenContent {
-                snapshotsOnly()
+                isReleaseVersion ? releasesOnly() : snapshotsOnly()
             }
         }
     }
 }
 
 signing {
-    sign publishing.publications.release
+    sign publishing.publications.mavenAndroid
+}
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }
 
 dependencies {
