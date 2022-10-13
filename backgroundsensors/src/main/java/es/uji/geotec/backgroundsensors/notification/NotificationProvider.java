@@ -17,6 +17,7 @@ public class NotificationProvider {
     private static final String SENSOR_RECORDING_CHANNEL = "SENSOR_RECORDING_CHANNEL";
     private static final int SENSOR_RECORDING_DESCRIPTION = R.string.sensor_recording_channel_description;
     private static final int SENSOR_RECORDING_NOTIFICATION_ID = 24;
+    private static final long[] VIBRATION_PATTERN = new long[]{400, 400, 400, 400, 400};
 
     private Context context;
     private NotificationManagerCompat notificationManager;
@@ -26,10 +27,11 @@ public class NotificationProvider {
         this.notificationManager = NotificationManagerCompat.from(context);
     }
 
-    public Notification getNotificationForRecordingService() {
+    public Notification getNotificationForRecordingService(boolean enableVibration) {
         setupNotificationChannelIfNeeded(
                 SENSOR_RECORDING_CHANNEL,
-                context.getString(SENSOR_RECORDING_DESCRIPTION)
+                context.getString(SENSOR_RECORDING_DESCRIPTION),
+                enableVibration
         );
 
         Intent launchIntent = context
@@ -47,7 +49,8 @@ public class NotificationProvider {
                         Build.VERSION.SDK_INT > Build.VERSION_CODES.M
                                 ? PendingIntent.FLAG_IMMUTABLE
                                 : 0
-                )
+                ),
+                enableVibration
         );
     }
 
@@ -55,7 +58,7 @@ public class NotificationProvider {
         return SENSOR_RECORDING_NOTIFICATION_ID;
     }
 
-    private void setupNotificationChannelIfNeeded(String id, String name) {
+    private void setupNotificationChannelIfNeeded(String id, String name, boolean enableVibration) {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.O) {
             return;
         }
@@ -69,7 +72,11 @@ public class NotificationProvider {
                 name,
                 NotificationManager.IMPORTANCE_HIGH
         );
-        channel.enableVibration(true);
+
+        if (enableVibration) {
+            channel.enableVibration(true);
+            channel.setVibrationPattern(VIBRATION_PATTERN);
+        }
 
         notificationManager.createNotificationChannel(channel);
     }
@@ -78,15 +85,34 @@ public class NotificationProvider {
             String channelId,
             String title,
             String text,
-            PendingIntent pendingIntent
+            PendingIntent pendingIntent,
+            boolean enableVibration
     ) {
-        return new NotificationCompat.Builder(context, channelId)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder builder = new Notification.Builder(context, channelId)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_sensor_service);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE);
+            }
+
+            return builder.build();
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
             .setContentTitle(title)
             .setContentText(text)
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_sensor_service)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
-            .build();
+            .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        if (enableVibration) {
+            builder.setVibrate(VIBRATION_PATTERN);
+        }
+
+        return builder.build();
     }
 }
