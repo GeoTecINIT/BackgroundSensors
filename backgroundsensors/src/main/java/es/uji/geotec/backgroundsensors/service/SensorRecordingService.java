@@ -42,6 +42,7 @@ public abstract class SensorRecordingService extends Service {
         return binder;
     }
 
+    public static boolean vibrateOnStart = true;
     private static final String TAG = "SensorRecordingService";
 
     private static final int TIMEOUT = 1000 * 60;
@@ -93,7 +94,7 @@ public abstract class SensorRecordingService extends Service {
         NotificationProvider notificationProvider = new NotificationProvider(this);
 
         int notificationId = notificationProvider.getRecordingServiceNotificationId();
-        Notification notification = notificationProvider.getNotificationForRecordingService();
+        Notification notification = notificationProvider.getNotificationForRecordingService(vibrateOnStart);
 
         startForeground(notificationId, notification);
     }
