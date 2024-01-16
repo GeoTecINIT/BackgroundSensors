@@ -2,6 +2,7 @@ package es.uji.geotec.backgroundsensorsdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,10 @@ public class DemoActivity extends AppCompatActivity {
 
         sensorManager = new SensorManager(this);
         serviceManager = new ServiceManager(this, BaseSensorRecordingService.class);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            serviceManager.enableServiceNotification();
+        }
 
         sensorSpinner = findViewById(R.id.sensors_spinner);
         List<Sensor> sensors = sensorManager.availableSensors(BaseSensor.values());
