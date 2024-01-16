@@ -16,11 +16,12 @@ To install the library you have to add the dependency in your `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'io.github.geotecinit:background-sensors:1.2.0'
+    implementation 'io.github.geotecinit:background-sensors:1.3.0'
 }
 ```
 
-> **Note**: if you are considering to create a new library extending the features of 
+> [!TIP]
+> If you are considering to create a new library extending the features of 
 > background-sensors, use `api` instead of `implementation`. If you are extending the library
 > directly in an application, `implementation` should work.
 
@@ -87,11 +88,14 @@ public class Demo extends Activity {
 }
 ```
 
-> **Note**: a full example can be found in [DemoActivity](app/src/main/java/es/uji/geotec/backgroundsensorsdemo/DemoActivity.java)
+> [!TIP] 
+> A full example can be found in [DemoActivity](app/src/main/java/es/uji/geotec/backgroundsensorsdemo/DemoActivity.java)
 
 As the library uses a foreground service for the data collection, a notification is shown while the service
-is working. The notification has some default texts and icons, but you can override these settings.
+is working. Starting from Android 13 onwards, the notification will not be show unless the `POST_NOTIFICATION`
+permission is requested. You can do so by calling the `serviceManager.enableServiceNotification()` method.
 
+The notification has some default texts and icons, but you can override these settings.
 To change the notification's texts add these strings to your `strings.xml` with the desired values:
 
 ```xml
@@ -163,12 +167,14 @@ Specific record for the samples obtained from triaxial sensors (i.e., accelerome
 
 ### [`ServiceManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/service/manager/ServiceManager.java)
 
-| **Method**                                                                 | **Return type** | **Description**                                                       |
-|----------------------------------------------------------------------------|-----------------|-----------------------------------------------------------------------|
-| `startCollection(CollectionConfiguration config, RecordCallback callback)` | `void`          | Starts data collection for the sensor specified in the configuration. |
-| `stopCollection(Sensor sensor)`                                            | `void`          | Stops data collection for the specified sensor.                       |
+| **Method**                                                                 | **Return type** | **Description**                                                                                   |
+|----------------------------------------------------------------------------|-----------------|---------------------------------------------------------------------------------------------------|
+| `enableServiceNotification`                                                | `void`          | Requests permission POST_NOTIFICATION to show the collection service notification in Android 13+. |
+| `startCollection(CollectionConfiguration config, RecordCallback callback)` | `void`          | Starts data collection for the sensor specified in the configuration.                             |
+| `stopCollection(Sensor sensor)`                                            | `void`          | Stops data collection for the specified sensor.                                                   |
 
-> **Note**: the collection on a specific sensor can only be started **once**. This means that
+> [!IMPORTANT]
+> The collection on a specific sensor can only be started **once**. This means that
 > if you want to change the `sensorDelay` or the `batchSize` for a sensor that is already being 
 > collected, you must stop the collection first and then start it again with the new configuration. 
 
@@ -207,7 +213,8 @@ In that case, he/she can create its own `TimeProvider`.
 For an example implementation you can refer to [`BaseCollectorManager`](backgroundsensors/src/main/java/es/uji/geotec/backgroundsensors/collection/BaseCollectorManager.java).
 
 
-> **Note**: the developer is in charge of requesting the required permissions for the new sources,
+> [!NOTE] 
+> The developer is in charge of requesting the required permissions for the new sources,
 > in case they are needed.
 
 
@@ -217,4 +224,15 @@ Apache License 2.0
 
 See [LICENSE](LICENSE).
 
+
+## Author
+
+<a href="https://github.com/matey97" title="Miguel Matey Sanz">
+  <img src="https://avatars3.githubusercontent.com/u/25453537?s=120" alt="Miguel Matey Sanz" width="120"/>
+</a>
+
+
+## Acknowledgements
+
+The development of this library has been possible thanks to the Spanish Ministry of Universities (grant FPU19/05352).
 
